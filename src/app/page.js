@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   const [url, setUrl] = useState("");
   const [format, setFormat] = useState("mp3");
+  const [quality, setQuality] = useState("192kbps"); // Default quality
   const [loading, setLoading] = useState(false);
   const [downloadLink, setDownloadLink] = useState("");
 
@@ -19,7 +20,7 @@ export default function Home() {
       const response = await fetch("/api/download", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url, format }),
+        body: JSON.stringify({ url, format, quality }),
       });
 
       const data = await response.json();
@@ -48,13 +49,40 @@ export default function Home() {
           className="w-64"
         />
         <select
-          className="border rounded p-2"
+          className="border rounded p-2 dark:bg-black dark:text-white"
           value={format}
-          onChange={(e) => setFormat(e.target.value)}
+          onChange={(e) => {
+            setFormat(e.target.value);
+            setQuality(e.target.value === "mp3" ? "192kbps" : "720p"); // Set default quality
+          }}
         >
           <option value="mp3">MP3</option>
           <option value="mp4">MP4</option>
         </select>
+
+        {/* Pilihan kualitas berdasarkan format */}
+        {format === "mp3" ? (
+          <select
+            className="border rounded p-2 dark:bg-black dark:text-white"
+            value={quality}
+            onChange={(e) => setQuality(e.target.value)}
+          >
+            <option value="128kbps">128kbps</option>
+            <option value="192kbps">192kbps (Default)</option>
+            <option value="320kbps">320kbps</option>
+          </select>
+        ) : (
+          <select
+            className="border rounded p-2 dark:bg-black dark:text-white"
+            value={quality}
+            onChange={(e) => setQuality(e.target.value)}
+          >
+            <option value="480p">480p</option>
+            <option value="720p">720p (Default)</option>
+            <option value="1080p">1080p</option>
+          </select>
+        )}
+
         <Button type="submit" disabled={loading}>
           {loading ? "Processing..." : "Convert"}
         </Button>
