@@ -1,8 +1,17 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
+first, install yt-dlp and ffmpeg:
+```bash
+yt-dlp:
+https://github.com/yt-dlp/yt-dlp
 
-First, run the development server:
+ffmpeg:
+https://ffmpeg.org/
+
+````
+
+second, run the development server:
 
 ```bash
 npm run dev
