@@ -2,14 +2,11 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 first, install yt-dlp and ffmpeg:
-```bash
-yt-dlp:
-https://github.com/yt-dlp/yt-dlp
 
-ffmpeg:
-https://ffmpeg.org/
+[yt-dlp](https://github.com/yt-dlp/yt-dlp)
 
-````
+[ffmpeg](https://ffmpeg.org/)
+
 
 second, run the development server:
 
