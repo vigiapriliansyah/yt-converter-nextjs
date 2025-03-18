@@ -39,7 +39,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <h1 className="text-2xl font-bold mb-4">YouTube to MP3/MP4 Converter</h1>
+      <h1 className="text-2xl font-bold text-center mb-6">
+        YouTube to MP3/MP4 Converter
+      </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-2">
         <Input
           type="text"
