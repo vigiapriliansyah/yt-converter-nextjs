@@ -36,7 +36,13 @@ export async function POST(req) {
 
       titleProcess.on("close", (code) => {
         if (code === 0) {
-          resolve(title.trim().replace(/[^a-zA-Z0-9-_]/g, "_")); // Bersihkan karakter aneh
+          resolve(
+            title
+              .trim()
+              .replace(/[_]+/g, " ")
+              .replace(/[^\w\s]/g, "")
+              .replace(/\s+/g, " "),
+          );
         } else {
           reject(new Error("Gagal mendapatkan judul video!"));
         }
@@ -46,7 +52,7 @@ export async function POST(req) {
     const title = await titlePromise;
 
     // Buat nama file berdasarkan format & kualitas
-    const filename = `${title}_${quality}.${format}`;
+    const filename = `${title} ${quality}.${format}`;
     const outputPath = path.join(outputFolder, filename);
 
     // Argumen yt-dlp untuk mengunduh dengan kualitas yang dipilih
@@ -60,7 +66,9 @@ export async function POST(req) {
             "--audio-format",
             "mp3",
             "--audio-quality",
-            quality.replace("kbps", ""), // Hapus teks 'kbps' agar sesuai dengan yt-dlp
+            quality.replace("kbps", ""),
+            "--embed-thumbnail", // Menambahkan thumbnail ke MP3
+            "--add-metadata", // Tambahkan metadata ID3
             "-o",
             outputPath,
           ]
@@ -70,9 +78,8 @@ export async function POST(req) {
             `bestvideo[height<=${quality.replace("p", "")}]+bestaudio/best[height<=${quality.replace("p", "")}]`,
             "-o",
             outputPath,
-          ];
+          ]; // Jalankan yt-dlp untuk download
 
-    // Jalankan yt-dlp untuk download
     const process = spawn("yt-dlp", ytDlpArgs);
 
     return new Promise((resolve) => {
