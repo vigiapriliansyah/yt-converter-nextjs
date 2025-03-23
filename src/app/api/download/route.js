@@ -76,6 +76,8 @@ export async function POST(req) {
             url,
             "-f",
             `bestvideo[height<=${quality.replace("p", "")}]+bestaudio/best[height<=${quality.replace("p", "")}]`,
+            "--merge-output-format",
+            "mp4",
             "-o",
             outputPath,
           ]; // Jalankan yt-dlp untuk download
